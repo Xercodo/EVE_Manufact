@@ -114,7 +114,7 @@ namespace EVE_Manufact
 				}
 			}
 		}
-		
+
 		private void LoadRegions()
 		{
 			newOre = new Ore();
@@ -137,7 +137,7 @@ namespace EVE_Manufact
 					region.name = parts[1];
 					region.typeID = parts[0];
 					sortList.Add(region);
-				}				
+				}
 			}
 			sortList.Sort(CompareRegions);
 			object[] copyList = sortList.Cast<object>().ToArray<object>();
@@ -186,10 +186,10 @@ namespace EVE_Manufact
 
 			propertyGrid1.SelectedObject = allOres;
 			this.trackRepro.Value = Properties.Settings.Default.repro;
-			this.trackRepro.Value = Properties.Settings.Default.reproEff;
+			this.trackReproEff.Value = Properties.Settings.Default.reproEff;
 			this.chkCompressed.Checked = Properties.Settings.Default.compressed;
 			this.numBaseRepro.Value = Convert.ToDecimal(Properties.Settings.Default.baseRepro);
-
+			this.numTax.Value = Convert.ToDecimal(Properties.Settings.Default.taxes);
 
 			this.grpRepro.Text = "Reprocessing Level: " + Properties.Settings.Default.repro;
 			this.grpReproEff.Text = "Reprocessing Efficiency Level: " + Properties.Settings.Default.reproEff;
@@ -206,11 +206,14 @@ namespace EVE_Manufact
 
 			comboRegions.SelectedItem = sel;
 
-			if(!pos.IsEmpty && !size.IsEmpty)
+			if (!pos.IsEmpty && !size.IsEmpty)
 			{
 				this.Location = pos;
 				this.Size = size;
 			}
+
+			if(Properties.Settings.Default.maximized)
+				this.WindowState = FormWindowState.Maximized;
 
 			loading = false;
 		}
@@ -224,6 +227,10 @@ namespace EVE_Manufact
 
 			Properties.Settings.Default.windowPos = this.Location;
 			Properties.Settings.Default.windowSize = this.Size;
+			if (this.WindowState == FormWindowState.Maximized)
+				Properties.Settings.Default.maximized = true;
+			else
+				Properties.Settings.Default.maximized = false;
 
 			Properties.Settings.Default.region = ((RegionDef)comboRegions.SelectedItem).name;
 			Properties.Settings.Default.regionID = ((RegionDef)comboRegions.SelectedItem).typeID;
@@ -242,13 +249,13 @@ namespace EVE_Manufact
 				CalculateMinerals();
 				SetToolTips();
 				UpdateAllOreValues();
-				FinalCalc();
+				//FinalCalc();
 			}
 		}
 
 		private void ValueChanged(object sender, EventArgs e)
 		{
-			FinalCalc();
+			//FinalCalc();
 		}
 
 		private void trackReproEff_ValueChanged(object sender, EventArgs e)
@@ -258,7 +265,7 @@ namespace EVE_Manufact
 				Properties.Settings.Default.reproEff = Convert.ToInt32(this.trackReproEff.Value);
 				Properties.Settings.Default.Save();
 				this.grpReproEff.Text = "Reprocessing Efficiency Level: " + Properties.Settings.Default.reproEff;
-				FinalCalc();
+				//FinalCalc();
 			}
 		}
 
@@ -269,7 +276,7 @@ namespace EVE_Manufact
 				Properties.Settings.Default.repro = Convert.ToInt32(this.trackRepro.Value);
 				Properties.Settings.Default.Save();
 				this.grpRepro.Text = "Reprocessing Level: " + Properties.Settings.Default.repro;
-				FinalCalc();
+				//FinalCalc();
 			}
 		}
 
@@ -279,7 +286,7 @@ namespace EVE_Manufact
 			{
 				Properties.Settings.Default.baseRepro = this.numBaseRepro.Value;
 				Properties.Settings.Default.Save();
-				FinalCalc();
+				//FinalCalc();
 			}
 		}
 
@@ -287,10 +294,9 @@ namespace EVE_Manufact
 		{
 			UpdateAllOreValues();
 
-			FinalCalc();
+			//FinalCalc();
 		}
 
-		bool asking = false;
 		private void MainForm_Activated(object sender, EventArgs e)
 		{
 			if (!loading)
@@ -300,66 +306,24 @@ namespace EVE_Manufact
 					string data = Clipboard.GetText();
 					if (data.Contains("Minerals") && data.Contains("typeID\tItem\tAvailable\tRequired\tEst. Unit price"))
 					{
-						if (!asking)
-						{
-							asking = true;
-							DialogResult result = MessageBox.Show(this, "Bill of Material data detected on the clipboard.\r\n\r\nDo you wish to import requirments?", "Detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-							if (result == System.Windows.Forms.DialogResult.Yes)
-							{
-								string[] lines = data.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-								foreach (string line in lines)
-								{
-									string[] chunks = line.Split(new char[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
-									if (chunks.Length >= 4)
-									{
-										int ava = 0;
-										int req = 0;
-										int remaining = 0;
-										try
-										{
-											ava = Convert.ToInt32(chunks[2]);
-											req = Convert.ToInt32(chunks[3]);
-											remaining = (req - ava);
-											if (remaining < 0)
-												continue;
-										}
-										catch { }
-										switch (chunks[1])
-										{
-											case "Tritanium":
-												this.numTrit.Value = remaining;
-												break;
-											case "Pyerite":
-												this.numPyer.Value = remaining;
-												break;
-											case "Mexallon":
-												this.numMex.Value = remaining;
-												break;
-											case "Isogen":
-												this.numIso.Value = remaining;
-												break;
-											case "Nocxium":
-												this.numNocx.Value = remaining;
-												break;
-											case "Zydrine":
-												this.numZyd.Value = remaining;
-												break;
-											case "Megacyte":
-												this.numMega.Value = remaining;
-												break;
-											case "Morphite":
-												this.numMorph.Value = remaining;
-												break;
-											default:
-												break;
-										}
-									}
-								}
-							}
-							Clipboard.Clear();
-							asking = false;
-						}
+						btnPaste.Enabled = true;
+						//if (asking)
+						//{
+						//	return;
+						//}
+						//asking = true;
+						//DialogResult result = MessageBox.Show(this, "Bill of Material data detected on the clipboard.\r\n\r\nDo you wish to import requirments?", "Detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+						//if (result != System.Windows.Forms.DialogResult.Yes)
+						//{
+						//	return;
+						//}
 					}
+					else
+					{
+						btnPaste.Enabled = false;
+					}
+					//Clipboard.Clear();
+					//asking = false;
 				}
 			}
 		}
@@ -481,6 +445,59 @@ namespace EVE_Manufact
 
 		#endregion
 
+		private void LoadFromClipboard(string data)
+		{
+			string[] lines = data.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+			foreach (string line in lines)
+			{
+				string[] chunks = line.Split(new char[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
+				if (chunks.Length >= 4)
+				{
+					int ava = 0;
+					int req = 0;
+					int remaining = 0;
+					try
+					{
+						ava = Convert.ToInt32(chunks[2]);
+						req = Convert.ToInt32(chunks[3]);
+						remaining = (req - ava);
+						if (remaining < 0)
+							continue;
+					}
+					catch { }
+					switch (chunks[1])
+					{
+						case "Tritanium":
+							this.numTrit.Value = remaining;
+							break;
+						case "Pyerite":
+							this.numPyer.Value = remaining;
+							break;
+						case "Mexallon":
+							this.numMex.Value = remaining;
+							break;
+						case "Isogen":
+							this.numIso.Value = remaining;
+							break;
+						case "Nocxium":
+							this.numNocx.Value = remaining;
+							break;
+						case "Zydrine":
+							this.numZyd.Value = remaining;
+							break;
+						case "Megacyte":
+							this.numMega.Value = remaining;
+							break;
+						case "Morphite":
+							this.numMorph.Value = remaining;
+							break;
+						default:
+							break;
+					}
+				}
+			}
+		}
+
 		private struct OreValue
 		{
 			public string name;
@@ -489,10 +506,75 @@ namespace EVE_Manufact
 			public Ore baseOre;
 		}
 
+		private int GetExtraMinerals(OreValue ore, Ore.Minerals min)
+		{
+			int reproLvl = Properties.Settings.Default.repro;
+			int reproEffLvl = Properties.Settings.Default.reproEff;
+			decimal baseRepro = Properties.Settings.Default.baseRepro;
+			bool comp = Properties.Settings.Default.compressed;
+			Ore selectedOre = ore.baseOre;
+			string name = ore.name;
+			int qty = ore.qty;
+
+			List<OreValue> selectedOres = new List<OreValue>();
+
+
+			decimal multiplier;
+			decimal reproAbility = (baseRepro *
+				(1.0m + (reproLvl * 0.03m) *
+				(1.0m + (reproEffLvl * 0.02m)) *
+				(1.0m + (selectedOre.Reprocess * 0.02m)))) / 100;
+			decimal taxes = (100m - (decimal)Properties.Settings.Default.taxes) / 100m;
+			int quantityMod = comp ? 1 : 100;
+
+			if (name.Contains("10%"))
+			{
+				//========================================================== 10% Ore
+				multiplier = (decimal)selectedOre[(int)min] * 1.10m;
+				multiplier *= reproAbility;
+				multiplier *= taxes;
+				if (multiplier != 0)
+				{
+					decimal mineralCount = qty * multiplier;
+					return Convert.ToInt32(mineralCount);
+				}
+			}
+			else if (name.Contains("5%"))
+			{
+				//========================================================== 5% Ore
+				multiplier = (decimal)selectedOre[(int)min] * 1.05m;
+				multiplier *= reproAbility;
+				multiplier *= taxes;
+				if (multiplier != 0)
+				{
+					decimal mineralCount = qty * multiplier;
+					return Convert.ToInt32(mineralCount);
+				}
+			}
+			else
+			{
+				//========================================================== Base Ore
+				multiplier = (decimal)selectedOre[(int)min] * 1.00m;
+				multiplier *= reproAbility;
+				multiplier *= taxes;
+				if (multiplier != 0)
+				{
+					decimal mineralCount = qty * multiplier;
+					return Convert.ToInt32(mineralCount);
+				}
+			}
+
+			return 0;
+		}
+
 
 		List<List<OreValue>> allMinerals = new List<List<OreValue>>();
+		bool calculating = false;
 		private void FinalCalc()
 		{
+			if (calculating)
+				return;
+			calculating = true;
 			decimal tritReq = this.numTrit.Value;
 			decimal pyerReq = this.numPyer.Value;
 			decimal mexReq = this.numMex.Value;
@@ -520,9 +602,11 @@ namespace EVE_Manufact
 				allMinerals.Add(sortedOres);
 				if (sortedOres.Count > 0)
 				{
-					for (int x = (int)Ore.Minerals.Morph - 1, y = i; x > i; x--, y++)
+					for (int x = (int)Ore.Minerals.Morph, y = 0; x > i; x--, y++)
 					{
-						requirments[x] -= allMinerals[i][0].baseOre[y];
+						OreValue selectedOre = allMinerals[i][0];
+						int mineral = GetExtraMinerals(selectedOre, (Ore.Minerals)y);
+						requirments[x] -= mineral;
 					}
 				}
 			}
@@ -530,33 +614,60 @@ namespace EVE_Manufact
 			txtMain.Clear();
 			decimal totalValue = 0;
 			decimal totalVolume = 0;
+			int mineralCounter = (int)Ore.Minerals.Morph;
 			foreach (List<OreValue> item in allMinerals)
 			{
-				if (item.Count > 0)
+				txtMain.AppendText("\r\n" + ((Ore.Minerals)mineralCounter).ToString() +
+					"======================================================================================================\r\n\r\n");
+
+				mineralCounter--;
+				if (item.Count == 0)
 				{
+					txtMain.AppendText("NONE\r\n");
+					continue;
+				}
+				int counter = 0;
+				foreach (OreValue val in item)
+				{
+
 					string comp = "";
 					if (Properties.Settings.Default.compressed)
 					{
 						comp = "Compressed ";
-						totalVolume += item[0].qty * (decimal)item[0].baseOre.compressed;
+						if (counter == 0)
+							totalVolume += val.qty * (decimal)val.baseOre.compressed;
 					}
 					else
 					{
-						totalVolume += item[0].qty * (decimal)item[0].baseOre.uncompressed;
+						if (counter == 0)
+							totalVolume += val.qty * (decimal)item[0].baseOre.uncompressed;
 					}
 
-					string quant = item[0].qty.ToString("N0").PadRight(12);
-					string name = (comp + item[0].name).PadRight(40);
+					string quant = val.qty.ToString("N0").PadRight(12);
+					string name = (comp + val.name).PadRight(40);
 
-					totalValue += item[0].value;
+					if (counter == 0)
+						totalValue += val.value;
 
-					txtMain.AppendText(quant + " of " + name + " at " + item[0].value.ToString("N2") + " ISK\r\n");
+					string selected = "";
+					if (counter == 0)
+						selected = "";
+					else
+						selected = "\t\t";
+
+
+					txtMain.AppendText(selected + quant + " of " + name + " at " + val.value.ToString("N2") + " ISK\r\n");
+					if (counter == 0)
+						txtMain.AppendText("\r\n");
+					counter++;
 				}
+
 			}
 
 			txtMain.AppendText("\r\n\r\n\r\n");
 			txtMain.AppendText("Total Volume :".PadRight(20) + totalVolume.ToString("N2") + " m3\r\n");
 			txtMain.AppendText("Total Value  :".PadRight(20) + totalValue.ToString("N2") + " ISK\r\n");
+			calculating = false;
 		}
 
 		private List<OreValue> CheckMinerals(Ore.Minerals min, decimal requirement)
@@ -601,7 +712,7 @@ namespace EVE_Manufact
 					}
 
 					//========================================================== 5% Ore
-					multiplier = (decimal)item[(int)min] * 1.10m;
+					multiplier = (decimal)item[(int)min] * 1.05m;
 					multiplier *= reproAbility;
 					multiplier *= taxes;
 					if (multiplier != 0)
@@ -620,7 +731,7 @@ namespace EVE_Manufact
 					}
 
 					//========================================================== Base Ore
-					multiplier = (decimal)item[(int)min] * 1.10m;
+					multiplier = (decimal)item[(int)min] * 1.00m;
 					multiplier *= reproAbility;
 					multiplier *= taxes;
 					if (multiplier != 0)
@@ -647,7 +758,7 @@ namespace EVE_Manufact
 
 		private static int CompareValue(OreValue x, OreValue y)
 		{
-			if(x.value == 0)
+			if (x.value == 0)
 			{
 				if (y.value == 0)
 					return 0;
@@ -740,7 +851,7 @@ namespace EVE_Manufact
 		{
 			DialogResult result = openXML.ShowDialog();
 			if (result == System.Windows.Forms.DialogResult.OK)
-			{				
+			{
 				string fileName = openXML.FileName;
 				for (int i = 0; i < allOres.Count; i++)
 				{
@@ -843,7 +954,7 @@ namespace EVE_Manufact
 			builder.AppendLine("</body></html>");
 
 			DialogResult result = saveHTML.ShowDialog();
-			if(result == System.Windows.Forms.DialogResult.OK)
+			if (result == System.Windows.Forms.DialogResult.OK)
 			{
 				StreamWriter writer = new StreamWriter(saveHTML.FileName);
 				writer.Write(builder.ToString());
@@ -860,8 +971,19 @@ namespace EVE_Manufact
 			{
 				Properties.Settings.Default.taxes = Convert.ToInt32(this.numTax.Value);
 				Properties.Settings.Default.Save();
-				FinalCalc();
+				//FinalCalc();
 			}
+		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			FinalCalc();
+		}
+
+		private void btnPaste_Click(object sender, EventArgs e)
+		{
+			string data = Clipboard.GetText();
+			LoadFromClipboard(data);
 		}
 	}
 

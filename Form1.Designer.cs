@@ -58,6 +58,7 @@
 			this.btnRefresh = new System.Windows.Forms.Button();
 			this.btnCharImport = new System.Windows.Forms.Button();
 			this.comboRegions = new System.Windows.Forms.ComboBox();
+			this.btnHTML = new System.Windows.Forms.Button();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.numBaseRepro = new System.Windows.Forms.NumericUpDown();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -66,8 +67,9 @@
 			this.openXML = new System.Windows.Forms.OpenFileDialog();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.numTax = new System.Windows.Forms.NumericUpDown();
-			this.btnHTML = new System.Windows.Forms.Button();
 			this.saveHTML = new System.Windows.Forms.SaveFileDialog();
+			this.button1 = new System.Windows.Forms.Button();
+			this.btnPaste = new System.Windows.Forms.Button();
 			this.grpRepro.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.trackRepro)).BeginInit();
 			this.grpReproEff.SuspendLayout();
@@ -118,7 +120,6 @@
 			this.trackRepro.Size = new System.Drawing.Size(174, 45);
 			this.trackRepro.TabIndex = 12;
 			this.trackRepro.TickStyle = System.Windows.Forms.TickStyle.Both;
-			this.trackRepro.Value = 5;
 			this.trackRepro.ValueChanged += new System.EventHandler(this.trackRepro_ValueChanged);
 			// 
 			// grpReproEff
@@ -141,7 +142,6 @@
 			this.trackReproEff.Size = new System.Drawing.Size(177, 45);
 			this.trackReproEff.TabIndex = 13;
 			this.trackReproEff.TickStyle = System.Windows.Forms.TickStyle.Both;
-			this.trackReproEff.Value = 5;
 			this.trackReproEff.ValueChanged += new System.EventHandler(this.trackReproEff_ValueChanged);
 			// 
 			// numTrit
@@ -414,6 +414,21 @@
 			this.comboRegions.TabIndex = 13;
 			this.toolTip1.SetToolTip(this.comboRegions, "Select region to get market data from");
 			// 
+			// btnHTML
+			// 
+			this.btnHTML.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnHTML.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnHTML.BackgroundImage")));
+			this.btnHTML.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.btnHTML.FlatAppearance.BorderSize = 0;
+			this.btnHTML.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnHTML.Location = new System.Drawing.Point(712, 12);
+			this.btnHTML.Name = "btnHTML";
+			this.btnHTML.Size = new System.Drawing.Size(24, 24);
+			this.btnHTML.TabIndex = 14;
+			this.toolTip1.SetToolTip(this.btnHTML, "Export shopping list for IGB");
+			this.btnHTML.UseVisualStyleBackColor = true;
+			this.btnHTML.Click += new System.EventHandler(this.btnHTML_Click);
+			// 
 			// groupBox4
 			// 
 			this.groupBox4.Controls.Add(this.numBaseRepro);
@@ -486,30 +501,46 @@
 			this.numTax.TabIndex = 2;
 			this.numTax.ValueChanged += new System.EventHandler(this.numTax_ValueChanged);
 			// 
-			// btnHTML
-			// 
-			this.btnHTML.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnHTML.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnHTML.BackgroundImage")));
-			this.btnHTML.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.btnHTML.FlatAppearance.BorderSize = 0;
-			this.btnHTML.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnHTML.Location = new System.Drawing.Point(712, 12);
-			this.btnHTML.Name = "btnHTML";
-			this.btnHTML.Size = new System.Drawing.Size(24, 24);
-			this.btnHTML.TabIndex = 14;
-			this.toolTip1.SetToolTip(this.btnHTML, "Export shopping list for IGB");
-			this.btnHTML.UseVisualStyleBackColor = true;
-			this.btnHTML.Click += new System.EventHandler(this.btnHTML_Click);
-			// 
 			// saveHTML
 			// 
 			this.saveHTML.Filter = "Web Page|*.html";
+			// 
+			// button1
+			// 
+			this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
+			this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.button1.FlatAppearance.BorderSize = 0;
+			this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button1.Location = new System.Drawing.Point(177, 269);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(24, 24);
+			this.button1.TabIndex = 15;
+			this.toolTip1.SetToolTip(this.button1, "Calculate");
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
+			// 
+			// btnPaste
+			// 
+			this.btnPaste.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.btnPaste.Enabled = false;
+			this.btnPaste.FlatAppearance.BorderSize = 0;
+			this.btnPaste.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnPaste.Image = ((System.Drawing.Image)(resources.GetObject("btnPaste.Image")));
+			this.btnPaste.Location = new System.Drawing.Point(147, 269);
+			this.btnPaste.Name = "btnPaste";
+			this.btnPaste.Size = new System.Drawing.Size(24, 24);
+			this.btnPaste.TabIndex = 16;
+			this.toolTip1.SetToolTip(this.btnPaste, "Import data from Clipboard");
+			this.btnPaste.UseVisualStyleBackColor = true;
+			this.btnPaste.Click += new System.EventHandler(this.btnPaste_Click);
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(884, 443);
+			this.Controls.Add(this.btnPaste);
+			this.Controls.Add(this.button1);
 			this.Controls.Add(this.btnHTML);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.comboRegions);
@@ -598,6 +629,8 @@
 		private System.Windows.Forms.NumericUpDown numTax;
 		private System.Windows.Forms.Button btnHTML;
 		private System.Windows.Forms.SaveFileDialog saveHTML;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button btnPaste;
 	}
 }
 
