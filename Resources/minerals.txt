@@ -1,0 +1,49 @@
+//Ore Type	Uncompressed Volume	Compressed Volume	Tritanium	Pyerite	Mexallon	Isogen	Nocxium	Megacyte	Zydrine	Morphite	Location
+Veldspar	0.1	0.15	415								1.0 (All Space)	1230	28432	12195
+Concentrated Veldspar (+5%)	0.1	0.15	436								1.0 (All Space)	17470	28430
+Dense Veldspar (+10%)	0.1	0.15	457								1.0 (All Space)	17471	28431
+Scordite	0.15	0.19	346	173							1.0 (All Space)	1228	28429	12193
+Condensed Scordite (+5%)	0.15	0.19	364	182							1.0 (All Space)	17463	28427
+Massive Scordite (+10%)	0.15	0.19	381	190							1.0 (All Space)	17464	28428
+Pyroxeres	0.3	0.16	351	25	50		5				0.9 (Amarr, Caldari)	1224	28424	12192
+Solid Pyroxeres (+5%)	0.3	0.16	369	26	53		5				0.9 (Amarr, Caldari)	17459	28425
+Viscous Pyroxeres (+10%)	0.3	0.16	387	27	55		5				0.9 (Amarr, Caldari)	17460	28426
+Plagioclase	0.35	0.15	107	213	107						0.9 (Gallente, Minmatar), 0.7 (Caldari)	18	28422	12191
+Azure Plagioclase (+5%)	0.35	0.15	113	224	113						0.9 (Gallente, Minmatar), 0.7 (Caldari)	17455	28421
+Rich Plagioclase (+10%)	0.35	0.15	118	235	118						0.9 (Gallente, Minmatar), 0.7 (Caldari)	17456	28423
+Omber	0.6	0.3	800	100		85					0.7 (Gallente, Minmatar)	1227	28416	12190
+Silvery Omber (+5%)	0.6	0.3	840	105		90					0.7 (Gallente, Minmatar)	17867	28417
+Golden Omber (+10%)	0.6	0.3	880	110		94					0.7 (Gallente, Minmatar)	17868	28415
+Kernite	1.2	0.19	134		267	134					0.7 (Amarr), 0.4 (Caldari, Minmatar)	20	28410	12188
+Luminous Kernite (+5%)	1.2	0.19	141		281	141					0.7 (Amarr), 0.4 (Caldari, Minmatar)	17452	28411
+Fiery Kernite (+10%)	1.2	0.19	148		294	148					0.7 (Amarr), 0.4 (Caldari, Minmatar)	17453	28409
+Jaspet	2	0.15			350		75		8		0.4 (Amarr, Gallente)	1226	28406	12187
+Pure Jaspet (+5%)	2	0.15			368		79		8		0.4 (Amarr, Gallente)	17448	28408
+Pristine Jaspet (+10%)	2	0.15			385		83		9		0.4 (Amarr, Gallente)	17449	28407
+Hemorphite	3	0.16	2200			100	120		15		0.2 (Amarr, Gallente)	1231	28403	12186
+Vivid Hemorphite (+5%)	3	0.16	2310			105	126		16		0.2 (Amarr, Gallente)	17444	28405
+Radiant Hemorphite (+10%)	3	0.16	2420			110	132		17		0.2 (Amarr, Gallente)	17445	28404
+Hedbergite	3	0.14		1000		200	100		19		0.2 (Amarr, Gallente)	21	28401	12185
+Vitric Hedbergite (+5%)	3	0.14		1050		210	105		20		0.2 (Amarr, Gallente)	17440	28402
+Glazed Hedbergite (+10%)	3	0.14		1100		220	110		21		0.2 (Amarr, Gallente)	17441	28400
+Gneiss	5	1.03		2200	2400	300					-0.4 (Amarr, Minmatar)	1229	28397	12184
+Iridescent Gneiss (+5%)	5	1.03		2310	2520	315					-0.4 (Amarr, Minmatar)	17865	28398
+Prismatic Gneiss (+10%)	5	1.03		2420	2640	330					-0.4 (Amarr, Minmatar)	17866	28399
+Dark Ochre	8	3.27	10000			1600	120				-0.2 (Caldari, Gallente)	1232	28394	12183
+Onyx Ochre (+5%)	8	3.27	10500			1680	126				-0.2 (Caldari, Gallente)	17436	28396
+Obsidian Ochre (+10%)	8	3.27	11000			1760	132				-0.2 (Caldari, Gallente)	17437	28395
+Spodumain	16	16	56000	12050	2100	450					-0.5 (Amarr, Caldari)	19	28420	12194
+Bright Spodumain (+5%)	16	16	58800	12653	2205	473					-0.5 (Amarr, Caldari)	17466	28418
+Gleaming Spodumain (+10%)	16	16	61600	13255	2310	495					-0.5 (Amarr, Caldari)	17467	28419
+Crokite	16	7.81	21000				760		135		-0.5 (Amarr, Caldari, Gallente)	1225	28391	12182
+Sharp Crokite (+5%)	16	7.81	22050				798		142		-0.5 (Amarr, Caldari, Gallente)	17432	28393
+Crystalline Crokite (+10%)	16	7.81	23100				836		149		-0.5 (Amarr, Caldari, Gallente)	17433	28392
+Bistot	16	6.11		12000				100	450		-0.6 (All Space)	1223	28388	12181
+Triclinic Bistot (+5%)	16	6.11		12600				105	473		-0.6 (All Space)	17428	28390
+Monoclinic Bistot (+10%)	16	6.11		13200				110	495		-0.6 (All Space)	17429	28389
+Arkonor	16	3.08	22000		2500			320			-0.6 (All Space)	22	28367	12180
+Crimson Arkonor (+5%)	16	3.08	23100		2625			336			-0.7 (All Space)	17425	28385
+Prime Arkonor (+10%)	16	3.08	24200		2750			352			-0.7 (All Space)	17426	28387
+Mercoxit	40	0.1								300	-0.8 (All Space)	11396	28413	12189
+Magma Mercoxit (+5%)	40	0.1								315	-0.8 (All Space)	17869	28412
+Vitreous Mercoxit (+10%)	40	0.1								330	-0.8 (All Space)	17870	28414
