@@ -35,5 +35,8 @@
     <Setting Name="regionID" Type="System.String" Scope="User">
       <Value Profile="(Default)">10000002</Value>
     </Setting>
+    <Setting Name="taxes" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

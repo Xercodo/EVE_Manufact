@@ -286,6 +286,8 @@ namespace EVE_Manufact
 		private void btnRefresh_Click(object sender, EventArgs e)
 		{
 			UpdateAllOreValues();
+
+			FinalCalc();
 		}
 
 		bool asking = false;
@@ -487,6 +489,8 @@ namespace EVE_Manufact
 			public Ore baseOre;
 		}
 
+
+		List<List<OreValue>> allMinerals = new List<List<OreValue>>();
 		private void FinalCalc()
 		{
 			decimal tritReq = this.numTrit.Value;
@@ -508,7 +512,7 @@ namespace EVE_Manufact
 			requirments.Add(pyerReq);
 			requirments.Add(tritReq);
 
-			List<List<OreValue>> allMinerals = new List<List<OreValue>>();
+			allMinerals = new List<List<OreValue>>();
 
 			for (int i = 0, j = (int)Ore.Minerals.Morph; i <= (int)Ore.Minerals.Morph; i++, j--)
 			{
@@ -574,11 +578,13 @@ namespace EVE_Manufact
 						(1.0m + (reproLvl * 0.03m) *
 						(1.0m + (reproEffLvl * 0.02m)) *
 						(1.0m + (item.Reprocess * 0.02m)))) / 100;
+					decimal taxes = (100m - (decimal)Properties.Settings.Default.taxes) / 100m;
 					int quantityMod = comp ? 1 : 100;
 
 					//========================================================== 10% Ore
 					multiplier = (decimal)item[(int)min] * 1.10m;
 					multiplier *= reproAbility;
+					multiplier *= taxes;
 					if (multiplier != 0)
 					{
 						prelim = (requirement / multiplier);
@@ -597,6 +603,7 @@ namespace EVE_Manufact
 					//========================================================== 5% Ore
 					multiplier = (decimal)item[(int)min] * 1.10m;
 					multiplier *= reproAbility;
+					multiplier *= taxes;
 					if (multiplier != 0)
 					{
 						prelim = (requirement / multiplier);
@@ -615,6 +622,7 @@ namespace EVE_Manufact
 					//========================================================== Base Ore
 					multiplier = (decimal)item[(int)min] * 1.10m;
 					multiplier *= reproAbility;
+					multiplier *= taxes;
 					if (multiplier != 0)
 					{
 						prelim = (requirement / multiplier);
@@ -639,6 +647,12 @@ namespace EVE_Manufact
 
 		private static int CompareValue(OreValue x, OreValue y)
 		{
+			if(x.value == 0)
+			{
+				if (y.value == 0)
+					return 0;
+				return 1;
+			}
 			bool retVal = x.value > y.value;
 
 			if (retVal)
@@ -764,6 +778,90 @@ namespace EVE_Manufact
 			}
 
 			return 0;
+		}
+
+		private void btnHTML_Click(object sender, EventArgs e)
+		{
+			if (allMinerals.Count == 0)
+				return;
+			StringBuilder builder = new StringBuilder();
+			builder.AppendLine("<!DOCTYPE html><html><head><title>Shopping List</title></head>" +
+				"<body><table cellpadding=\"5\"><tr><td><center><h2>Item</h2></center></td><td><h2>Qty</h2></td><td> </td><td> </td></tr>");
+
+			foreach (List<OreValue> list in allMinerals)
+			{
+				if (list.Count == 0)
+					continue;
+				string id = "";
+				OreValue current = list[0];
+				bool compressed = Properties.Settings.Default.compressed;
+
+				if (current.name.Contains("5%"))
+				{
+					if (compressed)
+						id = current.baseOre.compressedFivePercentID;
+					else
+						id = current.baseOre.fivePercentID;
+				}
+				else if (current.name.Contains("10%"))
+				{
+					if (compressed)
+						id = current.baseOre.compressedTenPercentID;
+					else
+						id = current.baseOre.tenPercentID;
+				}
+				else
+				{
+					if (compressed)
+						id = current.baseOre.compressedBaseID;
+					else
+						id = current.baseOre.baseID;
+				}
+
+				string compressedText = compressed ? "Compressed " : "";
+
+				string line = "<tr>";
+				line += "<td>" + compressedText + current.name + "</td>";
+				line += "<td>" + current.qty + "</td>";
+				line += "<td><center><button type=\"button\" onclick=\"CCPEVE.showInfo(" + id + ")\">Show Info</button></center></td>";
+				line += "<td><center><button type=\"button\" onclick=\"CCPEVE.showMarketDetails(" + id + ")\">Market Details</button></center></td>";
+				line += "</tr>";
+
+				builder.AppendLine(line);
+			}
+			builder.AppendLine("</table>");
+
+			//builder.AppendLine("<br/><br/><table><tr><td colspan=\"4\"><h2>Set Destination To Market Hub</h2></td></tr>");
+			//builder.AppendLine("<tr>");
+			//builder.AppendLine("<td><button type=\"button\" onclick=\"CCPEVE.setDestination(" + 30000142 + ")\">Jita</button></td>");
+			//builder.AppendLine("<td><button type=\"button\" onclick=\"CCPEVE.setDestination(" + 30002187 + ")\">Amarr</button></td>");
+			//builder.AppendLine("<td><button type=\"button\" onclick=\"CCPEVE.setDestination(" + 30002659 + ")\">Dodixie</button></td>");
+			//builder.AppendLine("<td><button type=\"button\" onclick=\"CCPEVE.setDestination(" + 30002510 + ")\">Rens</button></td>");
+			//builder.AppendLine("</tr><tr><td colspan=\"4\">" + 
+			//	"<button type=\"button\" onclick=\"CCPEVE.requestTrust('http://wiki.eveonline.com');\">Request Trust</button>" + 
+			//	"</td></tr></table>");
+			builder.AppendLine("</body></html>");
+
+			DialogResult result = saveHTML.ShowDialog();
+			if(result == System.Windows.Forms.DialogResult.OK)
+			{
+				StreamWriter writer = new StreamWriter(saveHTML.FileName);
+				writer.Write(builder.ToString());
+				writer.Close();
+
+				Clipboard.SetText("file:///" + saveHTML.FileName);
+				MessageBox.Show(this, "HTML file URL copied to clipboard", "Copied", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+		}
+
+		private void numTax_ValueChanged(object sender, EventArgs e)
+		{
+			if (!loading)
+			{
+				Properties.Settings.Default.taxes = Convert.ToInt32(this.numTax.Value);
+				Properties.Settings.Default.Save();
+				FinalCalc();
+			}
 		}
 	}
 

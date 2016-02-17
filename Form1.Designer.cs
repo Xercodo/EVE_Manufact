@@ -57,13 +57,17 @@
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.btnRefresh = new System.Windows.Forms.Button();
 			this.btnCharImport = new System.Windows.Forms.Button();
+			this.comboRegions = new System.Windows.Forms.ComboBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.numBaseRepro = new System.Windows.Forms.NumericUpDown();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.openXML = new System.Windows.Forms.OpenFileDialog();
-			this.comboRegions = new System.Windows.Forms.ComboBox();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.numTax = new System.Windows.Forms.NumericUpDown();
+			this.btnHTML = new System.Windows.Forms.Button();
+			this.saveHTML = new System.Windows.Forms.SaveFileDialog();
 			this.grpRepro.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.trackRepro)).BeginInit();
 			this.grpReproEff.SuspendLayout();
@@ -80,6 +84,8 @@
 			this.groupBox4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numBaseRepro)).BeginInit();
 			this.statusStrip1.SuspendLayout();
+			this.groupBox1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numTax)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// propertyGrid1
@@ -89,7 +95,7 @@
 			this.propertyGrid1.Location = new System.Drawing.Point(572, 12);
 			this.propertyGrid1.Name = "propertyGrid1";
 			this.propertyGrid1.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-			this.propertyGrid1.Size = new System.Drawing.Size(300, 356);
+			this.propertyGrid1.Size = new System.Drawing.Size(300, 404);
 			this.propertyGrid1.TabIndex = 1;
 			// 
 			// grpRepro
@@ -171,7 +177,7 @@
 			this.groupBox3.Controls.Add(this.numPyer);
 			this.groupBox3.Controls.Add(this.lblTrit);
 			this.groupBox3.Controls.Add(this.numTrit);
-			this.groupBox3.Location = new System.Drawing.Point(12, 262);
+			this.groupBox3.Location = new System.Drawing.Point(12, 310);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(554, 106);
 			this.groupBox3.TabIndex = 6;
@@ -352,14 +358,14 @@
 			this.txtMain.Name = "txtMain";
 			this.txtMain.ReadOnly = true;
 			this.txtMain.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtMain.Size = new System.Drawing.Size(359, 244);
+			this.txtMain.Size = new System.Drawing.Size(359, 292);
 			this.txtMain.TabIndex = 7;
 			this.txtMain.WordWrap = false;
 			// 
 			// chkCompressed
 			// 
 			this.chkCompressed.AutoSize = true;
-			this.chkCompressed.Location = new System.Drawing.Point(12, 211);
+			this.chkCompressed.Location = new System.Drawing.Point(12, 269);
 			this.chkCompressed.Name = "chkCompressed";
 			this.chkCompressed.Size = new System.Drawing.Size(109, 17);
 			this.chkCompressed.TabIndex = 8;
@@ -397,12 +403,23 @@
 			this.btnCharImport.UseVisualStyleBackColor = true;
 			this.btnCharImport.Click += new System.EventHandler(this.btnCharImport_Click);
 			// 
+			// comboRegions
+			// 
+			this.comboRegions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.comboRegions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboRegions.FormattingEnabled = true;
+			this.comboRegions.Location = new System.Drawing.Point(742, 15);
+			this.comboRegions.Name = "comboRegions";
+			this.comboRegions.Size = new System.Drawing.Size(130, 21);
+			this.comboRegions.TabIndex = 13;
+			this.toolTip1.SetToolTip(this.comboRegions, "Select region to get market data from");
+			// 
 			// groupBox4
 			// 
 			this.groupBox4.Controls.Add(this.numBaseRepro);
 			this.groupBox4.Location = new System.Drawing.Point(12, 153);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(183, 52);
+			this.groupBox4.Size = new System.Drawing.Size(189, 52);
 			this.groupBox4.TabIndex = 5;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Base Refine";
@@ -430,7 +447,7 @@
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1,
             this.toolStripStatusLabel1});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 373);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 421);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(884, 22);
 			this.statusStrip1.TabIndex = 11;
@@ -451,22 +468,50 @@
 			// 
 			this.openXML.Filter = "Character Data|*.xml";
 			// 
-			// comboRegions
+			// groupBox1
 			// 
-			this.comboRegions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.comboRegions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboRegions.FormattingEnabled = true;
-			this.comboRegions.Location = new System.Drawing.Point(712, 15);
-			this.comboRegions.Name = "comboRegions";
-			this.comboRegions.Size = new System.Drawing.Size(160, 21);
-			this.comboRegions.TabIndex = 13;
-			this.toolTip1.SetToolTip(this.comboRegions, "Select region to get market data from");
+			this.groupBox1.Controls.Add(this.numTax);
+			this.groupBox1.Location = new System.Drawing.Point(12, 211);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(189, 52);
+			this.groupBox1.TabIndex = 6;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Station Tax (%)";
+			// 
+			// numTax
+			// 
+			this.numTax.Location = new System.Drawing.Point(6, 19);
+			this.numTax.Name = "numTax";
+			this.numTax.Size = new System.Drawing.Size(171, 20);
+			this.numTax.TabIndex = 2;
+			this.numTax.ValueChanged += new System.EventHandler(this.numTax_ValueChanged);
+			// 
+			// btnHTML
+			// 
+			this.btnHTML.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnHTML.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnHTML.BackgroundImage")));
+			this.btnHTML.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.btnHTML.FlatAppearance.BorderSize = 0;
+			this.btnHTML.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnHTML.Location = new System.Drawing.Point(712, 12);
+			this.btnHTML.Name = "btnHTML";
+			this.btnHTML.Size = new System.Drawing.Size(24, 24);
+			this.btnHTML.TabIndex = 14;
+			this.toolTip1.SetToolTip(this.btnHTML, "Export shopping list for IGB");
+			this.btnHTML.UseVisualStyleBackColor = true;
+			this.btnHTML.Click += new System.EventHandler(this.btnHTML_Click);
+			// 
+			// saveHTML
+			// 
+			this.saveHTML.Filter = "Web Page|*.html";
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(884, 395);
+			this.ClientSize = new System.Drawing.Size(884, 443);
+			this.Controls.Add(this.btnHTML);
+			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.comboRegions);
 			this.Controls.Add(this.btnCharImport);
 			this.Controls.Add(this.statusStrip1);
@@ -478,7 +523,7 @@
 			this.Controls.Add(this.grpReproEff);
 			this.Controls.Add(this.grpRepro);
 			this.Controls.Add(this.propertyGrid1);
-			this.MinimumSize = new System.Drawing.Size(900, 0);
+			this.MinimumSize = new System.Drawing.Size(900, 39);
 			this.Name = "MainForm";
 			this.ShowIcon = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -506,6 +551,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.numBaseRepro)).EndInit();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
+			this.groupBox1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.numTax)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -547,6 +594,10 @@
 		private System.Windows.Forms.Button btnCharImport;
 		private System.Windows.Forms.OpenFileDialog openXML;
 		private System.Windows.Forms.ComboBox comboRegions;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.NumericUpDown numTax;
+		private System.Windows.Forms.Button btnHTML;
+		private System.Windows.Forms.SaveFileDialog saveHTML;
 	}
 }
 

@@ -154,5 +154,17 @@ namespace EVE_Manufact.Properties {
                 this["regionID"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int taxes {
+            get {
+                return ((int)(this["taxes"]));
+            }
+            set {
+                this["taxes"] = value;
+            }
+        }
     }
 }
